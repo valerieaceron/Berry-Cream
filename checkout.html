@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Checkout | Berry & Cream</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style/style.css">
+
+<style>
+.checkout-section{
+  padding: 80px 0;
+}
+
+.checkout-card{
+  max-width: 800px;
+  margin: 0 auto;
+  background: #f4f3ef;
+  border: 1px solid #b9b7a7;
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.checkout-title{
+  font-family: 'Recoleta', serif;
+  font-size: 42px;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #24372d;
+}
+
+.checkout-subtitle{
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+.checkout-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.checkout-product{
+  text-align: center;
+  border: 1px solid #cfc7bc;
+  border-radius: 16px;
+  padding: 25px;
+  background: #fff;
+}
+
+.checkout-product img{
+  width: 180px;
+  margin: 0 auto 20px;
+}
+
+.checkout-product h3{
+  font-family: 'Recoleta', serif;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.checkout-form label{
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select{
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.checkout-form textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+.checkout-btn{
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1px solid #a51d1d;
+  background: #a51d1d;
+  color: white;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.checkout-btn:hover{
+  background: #8c1616;
+}
+
+.checkout-note{
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+
+@media (max-width: 768px){
+  .checkout-grid{
+    grid-template-columns: 1fr;
+  }
+
+  .checkout-card{
+    padding: 25px;
+  }
+
+  .checkout-title{
+    font-size: 34px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container nav-container">
+
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/logo.png" alt="Berry & Cream Logo">
+      </a>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Get in touch</a></li>
+    </ul>
+
+  </div>
+</nav>
+
+<!-- CHECKOUT SECTION -->
+<section class="checkout-section container">
+  <div class="checkout-card">
+
+    <h1 class="checkout-title">Checkout</h1>
+    <p class="checkout-subtitle">Complete your order request and we’ll get in touch with you.</p>
+
+    <div class="checkout-grid">
+
+      <!-- PRODUCT SUMMARY -->
+      <div class="checkout-product">
+        <img id="productImage" src="images/cake.png" alt="Selected Product">
+        <h3 id="productName">Loading...</h3>
+        <p id="productText">Your selected item will appear here.</p>
+      </div>
+
+      <!-- ORDER FORM -->
+      <div class="checkout-form">
+        <form>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name">
+
+          <label for="number">Contact Number</label>
+          <input type="text" id="number" placeholder="Enter your contact number">
+
+          <label for="quantity">Quantity</label>
+          <select id="quantity">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>10+</option>
+          </select>
+
+          <label for="notes">Order Notes</label>
+          <textarea id="notes" placeholder="Add notes or special requests"></textarea>
+
+          <a href="contact.html" class="checkout-btn">Submit Inquiry</a>
+
+          <p class="checkout-note">
+            This page collects your order request. Final confirmation will be coordinated through our contact page.
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+
+    <div class="logo">
+      <a href="index.html">
+        <img src="images/logo.png" alt="Berry & Cream Logo">
+      </a>
+    </div>
+
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="terms.html">Terms & Conditions</a></li>
+    </ul>
+
+  </div>
+</footer>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+
+const productName = document.getElementById("productName");
+const productImage = document.getElementById("productImage");
+const productText = document.getElementById("productText");
+
+const productMap = {
+  "strawberry-shortcake": {
+    name: "Strawberry Shortcake",
+    image: "images/cake.png",
+    text: "A soft and creamy strawberry favorite."
+  },
+  "croissants": {
+    name: "Croissants",
+    image: "images/croissant.png",
+    text: "Flaky, buttery, and perfect for a sweet break."
+  },
+  "chocolate-chip-cookie": {
+    name: "Chocolate Chip Cookie",
+    image: "images/cookie.png",
+    text: "A classic cookie loaded with chocolate chips."
+  },
+  "strawberry-milk": {
+    name: "Strawberry Milk",
+    image: "images/milk.png",
+    text: "A refreshing sweet drink loved by our customers."
+  },
+  "matcha": {
+    name: "Matcha",
+    image: "images/matcha.png",
+    text: "Smooth and creamy matcha goodness."
+  },
+  "strawberry-milk-fizz": {
+    name: "Strawberry Milk Fizz",
+    image: "images/fizz.png",
+    text: "A fizzy and fun strawberry drink."
+  }
+};
+
+if (product && productMap[product]) {
+  productName.textContent = productMap[product].name;
+  productImage.src = productMap[product].image;
+  productImage.alt = productMap[product].name;
+  productText.textContent = productMap[product].text;
+} else {
+  productName.textContent = "No product selected";
+  productText.textContent = "Please return to the menu and choose an item first.";
+}
+</script>
+
+</body>
+</html>
