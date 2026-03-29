@@ -23,7 +23,7 @@
 <div class="container nav-container">
 
 <div class="logo">
-<a href="#">
+<a href="index.html">
 <img src="images/logo.png" alt="Berry & Cream Logo">
 </a>
 </div>
@@ -34,11 +34,19 @@
 <div></div>
 </div>
 
-<ul class="nav-links" id="navLinks">
-<li><a href="menu.html">Menu</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="#contact">Get in touch</a></li>
-</ul>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="#contact">Get in touch</a></li>
+
+      <!-- CART INSIDE -->
+      <li class="nav-cart">
+        <a href="order.html" class="cart-link">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+    </ul>
 
 </div>
 
@@ -109,39 +117,39 @@ DESERVES A LITTLE
 <div class="product-grid">
 
 <div class="product">
-<img src="images/cake.png" alt="Strawberry Shortcake">
+<img src="images/cake.png">
 <p>Strawberry Shortcake</p>
-<button>Add to cart</button>
+<button class="add-cart-btn" onclick="addToCart('strawberry-shortcake')">Add to cart</button>
 </div>
 
 <div class="product">
-<img src="images/croissant.png" alt="Croissants">
+<img src="images/croissant.png">
 <p>Croissants</p>
-<button>Add to cart</button>
+<button class="add-cart-btn" onclick="addToCart('croissants')">Add to cart</button>
 </div>
 
 <div class="product">
-<img src="images/cookie.png" alt="Chocolate Chips">
+<img src="images/cookie.png">
 <p>Chocolate Chips</p>
-<button>Add to cart</button>
+<button class="add-cart-btn" onclick="addToCart('chocolate-chip-cookie')">Add to cart</button>
 </div>
 
 <div class="product">
-<img src="images/milk.png" alt="Strawberry Milk">
+<img src="images/milk.png">
 <p>Strawberry Milk</p>
-<button>Add to cart</button>
+<button class="add-cart-btn" onclick="addToCart('strawberry-milk')">Add to cart</button>
 </div>
 
 <div class="product">
-<img src="images/matcha.png" alt="Matcha">
-<p>Matcha</p>
-<button>Add to cart</button>
+<img src="images/matcha.png">
+<p>Matcha Latte</p>
+<button class="add-cart-btn" onclick="addToCart('matcha')">Add to cart</button>
 </div>
 
 <div class="product">
-<img src="images/fizz.png" alt="Strawberry Milk Fizz">
+<img src="images/fizz.png">
 <p>Strawberry Milk Fizz</p>
-<button>Add to cart</button>
+<button class="add-cart-btn" onclick="addToCart('strawberry-milk-fizz')">Add to cart</button>
 </div>
 
 </div>
@@ -214,6 +222,47 @@ DESERVES A LITTLE
 </div>
 
 </footer>
+
+
+<script>
+
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cartCount");
+  if (!cartCount) return;
+
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
+
+  if (totalItems > 0) {
+    cartCount.style.display = "flex";
+  } else {
+    cartCount.style.display = "none";
+  }
+}
+
+function addToCart(product) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let existing = cart.find(item => item.name === product);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      name: product,
+      qty: 1
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  window.location.href = "order.html";
+}
+
+
+
+updateCartCount();
+</script>
 
 </body>
 

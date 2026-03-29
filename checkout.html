@@ -10,119 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style/style.css">
 
-<style>
-.checkout-section{
-  padding: 80px 0;
-}
 
-.checkout-card{
-  max-width: 800px;
-  margin: 0 auto;
-  background: #f4f3ef;
-  border: 1px solid #b9b7a7;
-  border-radius: 20px;
-  padding: 40px;
-}
-
-.checkout-title{
-  font-family: 'Recoleta', serif;
-  font-size: 42px;
-  text-align: center;
-  margin-bottom: 10px;
-  color: #24372d;
-}
-
-.checkout-subtitle{
-  text-align: center;
-  margin-bottom: 40px;
-  opacity: 0.8;
-}
-
-.checkout-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-
-.checkout-product{
-  text-align: center;
-  border: 1px solid #cfc7bc;
-  border-radius: 16px;
-  padding: 25px;
-  background: #fff;
-}
-
-.checkout-product img{
-  width: 180px;
-  margin: 0 auto 20px;
-}
-
-.checkout-product h3{
-  font-family: 'Recoleta', serif;
-  font-size: 30px;
-  margin-bottom: 10px;
-}
-
-.checkout-form label{
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-}
-
-.checkout-form input,
-.checkout-form textarea,
-.checkout-form select{
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 18px;
-  border: 1px solid #ccc;
-  border-radius: 18px;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
-.checkout-form textarea{
-  min-height: 120px;
-  resize: vertical;
-}
-
-.checkout-btn{
-  display: inline-block;
-  padding: 12px 28px;
-  border-radius: 30px;
-  border: 1px solid #a51d1d;
-  background: #a51d1d;
-  color: white;
-  text-decoration: none;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.checkout-btn:hover{
-  background: #8c1616;
-}
-
-.checkout-note{
-  font-size: 14px;
-  opacity: 0.7;
-  margin-top: 15px;
-}
-
-@media (max-width: 768px){
-  .checkout-grid{
-    grid-template-columns: 1fr;
-  }
-
-  .checkout-card{
-    padding: 25px;
-  }
-
-  .checkout-title{
-    font-size: 34px;
-  }
-}
-</style>
 </head>
 
 <body>
@@ -137,64 +25,70 @@
       </a>
     </div>
 
-    <ul class="nav-links">
-      <li><a href="about.html">About</a></li>
+ <ul class="nav-links" id="navLinks">
       <li><a href="menu.html">Menu</a></li>
-      <li><a href="contact.html">Get in touch</a></li>
-    </ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html#contact">Get in touch</a></li>
+
+      <!-- CART INSIDE -->
+      <li class="nav-cart">
+        <a href="order.html" class="cart-link">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+  </ul>
 
   </div>
 </nav>
 
-<!-- CHECKOUT SECTION -->
-<section class="checkout-section container">
-  <div class="checkout-card">
 
-    <h1 class="checkout-title">Checkout</h1>
-    <p class="checkout-subtitle">Complete your order request and we’ll get in touch with you.</p>
+<!-- THANK YOU SECTION -->
+  <section class="checkout-thankyou container">
+    <h1>Thank you for your order!</h1>
 
-    <div class="checkout-grid">
+    <p class="thankyou-text">
+      Your sweet picks have been received. We’ll contact you as soon as your order is ready for pickup.
+      In the meantime, please review your order below.
+    </p>
 
-      <!-- PRODUCT SUMMARY -->
-      <div class="checkout-product">
-        <img id="productImage" src="images/cake.png" alt="Selected Product">
-        <h3 id="productName">Loading...</h3>
-        <p id="productText">Your selected item will appear here.</p>
+    <div class="thankyou-card">
+
+      <div class="thankyou-meta">
+        <p><strong id="displayName">Name not provided</strong></p>
+        <p id="displayContact">Contact number not provided</p>
+        <p class="pickup-only">Pickup Only</p>
       </div>
 
-      <!-- ORDER FORM -->
-      <div class="checkout-form">
-        <form>
-          <label for="name">Full Name</label>
-          <input type="text" id="name" placeholder="Enter your full name">
-
-          <label for="number">Contact Number</label>
-          <input type="text" id="number" placeholder="Enter your contact number">
-
-          <label for="quantity">Quantity</label>
-          <select id="quantity">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>10+</option>
-          </select>
-
-          <label for="notes">Order Notes</label>
-          <textarea id="notes" placeholder="Add notes or special requests"></textarea>
-
-          <a href="contact.html" class="checkout-btn">Submit Inquiry</a>
-
-          <p class="checkout-note">
-            This page collects your order request. Final confirmation will be coordinated through our contact page.
-          </p>
-        </form>
+      <div class="order-items">
+        <h3>Order Summary</h3>
+        <div id="checkoutList"></div>
       </div>
 
+      <div class="payment-summary">
+        <h3>Payment Summary</h3>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="subtotal">₱0.00</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>Total</span>
+          <span id="total">₱0.00</span>
+        </div>
+      </div>
+
+      <div class="checkout-finish">
+        <a href="index.html" class="order-btn" onclick="clearCart()">Done</a>
+      </div>
+      <div class="checkout-finish">
+      <a href="menu.html" class="secondary-btn">Order Again</a>
     </div>
-  </div>
-</section>
+    </div>
+  </section>
+
+
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -217,57 +111,144 @@
   </div>
 </footer>
 
+
 <script>
-const params = new URLSearchParams(window.location.search);
-const product = params.get("product");
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cartCount");
+  if (!cartCount) return;
 
-const productName = document.getElementById("productName");
-const productImage = document.getElementById("productImage");
-const productText = document.getElementById("productText");
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
 
-const productMap = {
-  "strawberry-shortcake": {
-    name: "Strawberry Shortcake",
-    image: "images/cake.png",
-    text: "A soft and creamy strawberry favorite."
-  },
-  "croissants": {
-    name: "Croissants",
-    image: "images/croissant.png",
-    text: "Flaky, buttery, and perfect for a sweet break."
-  },
-  "chocolate-chip-cookie": {
-    name: "Chocolate Chip Cookie",
-    image: "images/cookie.png",
-    text: "A classic cookie loaded with chocolate chips."
-  },
-  "strawberry-milk": {
-    name: "Strawberry Milk",
-    image: "images/milk.png",
-    text: "A refreshing sweet drink loved by our customers."
-  },
-  "matcha": {
-    name: "Matcha",
-    image: "images/matcha.png",
-    text: "Smooth and creamy matcha goodness."
-  },
-  "strawberry-milk-fizz": {
-    name: "Strawberry Milk Fizz",
-    image: "images/fizz.png",
-    text: "A fizzy and fun strawberry drink."
+  if (totalItems > 0) {
+    cartCount.style.display = "flex";
+  } else {
+    cartCount.style.display = "none";
   }
-};
-
-if (product && productMap[product]) {
-  productName.textContent = productMap[product].name;
-  productImage.src = productMap[product].image;
-  productImage.alt = productMap[product].name;
-  productText.textContent = productMap[product].text;
-} else {
-  productName.textContent = "No product selected";
-  productText.textContent = "Please return to the menu and choose an item first.";
 }
+
+
+  function toggleMenu() {
+    const navLinks = document.getElementById("navLinks");
+    if (navLinks) {
+      navLinks.classList.toggle("active");
+    }
+  }
+
+  const products = {
+    "strawberry-shortcake": {
+      name: "Strawberry Shortcake",
+      price: 180
+    },
+    "croissants": {
+      name: "Croissants",
+      price: 95
+    },
+    "chocolate-chip-cookie": {
+      name: "Chocolate Chip Cookie",
+      price: 85
+    },
+    "strawberry-milk": {
+      name: "Strawberry Milk",
+      price: 120
+    },
+    "matcha": {
+      name: "Matcha Latte",
+      price: 135
+    },
+    "strawberry-milk-fizz": {
+      name: "Strawberry Milk Fizz",
+      price: 130
+    }
+  };
+
+  let cart = JSON.parse(localStorage.getItem("checkoutCart")) || [];
+
+  function updateCartCount() {
+    const cartCount = document.getElementById("cartCount");
+    if (!cartCount) return;
+
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCount.textContent = totalItems;
+
+    cartCount.style.display = totalItems > 0 ? "flex" : "none";
+  }
+
+  function renderCheckout() {
+    const checkoutList = document.getElementById("checkoutList");
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+
+    if (!checkoutList) return;
+
+    checkoutList.innerHTML = "";
+
+    if (cart.length === 0) {
+      checkoutList.innerHTML = "<p>No items in your order.</p>";
+      subtotalEl.textContent = "₱0.00";
+      totalEl.textContent = "₱0.00";
+      updateCartCount();
+      return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach((item) => {
+      const product = products[item.name];
+      if (!product) return;
+
+      const itemTotal = product.price * item.qty;
+      subtotal += itemTotal;
+
+      const row = document.createElement("div");
+      row.className = "checkout-item";
+
+      row.innerHTML = `
+        <div>
+          <p class="checkout-item-name">${product.name}</p>
+          <p class="checkout-item-sub">₱${product.price.toFixed(2)} × ${item.qty}</p>
+        </div>
+        <div class="checkout-item-price">₱${itemTotal.toFixed(2)}</div>
+      `;
+
+      checkoutList.appendChild(row);
+    });
+
+    subtotalEl.textContent = `₱${subtotal.toFixed(2)}`;
+    totalEl.textContent = `₱${subtotal.toFixed(2)}`;
+
+    updateCartCount();
+  }
+
+  function loadCustomerInfo() {
+    const name = localStorage.getItem("checkoutName");
+    const address = localStorage.getItem("checkoutAddress");
+    const contact = localStorage.getItem("checkoutContact");
+
+    const nameEl = document.getElementById("displayName");
+    const addressEl = document.getElementById("displayAddress");
+    const contactEl = document.getElementById("displayContact");
+
+    if (nameEl) nameEl.textContent = name || "Name not provided";
+    if (addressEl) addressEl.textContent = address || "Address not provided";
+    if (contactEl) contactEl.textContent = contact || "Contact number not provided";
+  }
+
+  function clearCart() {
+  localStorage.removeItem("checkoutCart");
+  localStorage.removeItem("checkoutName");
+  localStorage.removeItem("checkoutAddress");
+  localStorage.removeItem("checkoutContact");
+  }
+
+  renderCheckout();
+  loadCustomerInfo();
+  updateCartCount();
 </script>
+
+
+
 
 </body>
 </html>

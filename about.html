@@ -23,7 +23,7 @@
 <div class="container nav-container">
 
 <div class="logo">
-<a href="#">
+<a href="index.html">
 <img src="images/logo.png" alt="Berry & Cream Logo">
 </a>
 </div>
@@ -34,11 +34,21 @@
 <div></div>
 </div>
 
-<ul class="nav-links" id="navLinks">
-<li><a href="menu.html">Menu</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="#contact">Get in touch</a></li>
-</ul>
+
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html#contact">Get in touch</a></li>
+
+      <!-- CART INSIDE -->
+      <li class="nav-cart">
+        <a href="order.html" class="cart-link">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+    </ul>
 
 </div>
 
@@ -88,45 +98,6 @@ To become a beloved neighborhood dessert brand known for its playful identity, c
 
 
 
-
-<!-- CONTACT -->
-
-<section id="contact" class="contact container">
-
-<h2>Contact Us</h2>
-
-<div class="contact-grid">
-
-<div class="contact-form">
-
-<label>Name</label>
-<input type="text" placeholder="Enter your name">
-
-<label>Contact Number</label>
-<input type="text" placeholder="Enter your number">
-
-<label>Message</label>
-<textarea placeholder="Write your message"></textarea>
-
-<button class="contact-btn">Submit Inquiry</button>
-
-</div>
-
-<div class="contact-info">
-
-<p>We are located at</p>
-<p>96 Kamuning Road QC</p>
-
-<h4>Follow us</h4>
-
-<p>Facebook • Instagram</p>
-
-</div>
-
-</div>
-
-</section>
-
 <!-- FOOTER -->
 
 <footer class="footer">
@@ -151,6 +122,27 @@ To become a beloved neighborhood dessert brand known for its playful identity, c
 </div>
 
 </footer>
+
+
+<script>
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cartCount");
+  if (!cartCount) return;
+
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
+
+  if (totalItems > 0) {
+    cartCount.style.display = "flex";
+  } else {
+    cartCount.style.display = "none";
+  }
+}
+
+
+updateCartCount();
+</script>
 
 </body>
 

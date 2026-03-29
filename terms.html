@@ -29,12 +29,19 @@
 </a>
 </div>
 
-<ul class="nav-links">
-<li><a href="menu.html">Menu</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="index.html#contact">Get in touch</a></li>
-</ul>
+ <ul class="nav-links" id="navLinks">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html#contact">Get in touch</a></li>
 
+      <!-- CART INSIDE -->
+      <li class="nav-cart">
+        <a href="order.html" class="cart-link">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+    </ul>
 </div>
 
 </nav>
@@ -131,6 +138,26 @@ posted on this page.
 </div>
 
 </footer>
+
+<script>
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartCount = document.getElementById("cartCount");
+  if (!cartCount) return;
+
+  const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalItems;
+
+  if (totalItems > 0) {
+    cartCount.style.display = "flex";
+  } else {
+    cartCount.style.display = "none";
+  }
+}
+
+
+updateCartCount();
+</script>
 
 </body>
 

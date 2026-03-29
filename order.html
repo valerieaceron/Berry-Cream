@@ -2,63 +2,271 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add to Cart | Berry & Cream</title>
 
-<title>Your Order | Berry & Cream</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style/style.css">
-
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
 
-<nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/logo.png" alt="Berry & Cream Logo">
+        </a>
+      </div>
 
-<div class="container nav-container">
+      <div class="burger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
 
-<div class="logo">
-<a href="index.html">
-<img src="images/logo.png" alt="Berry & Cream Logo">
-</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="index.html#contact">Get in touch</a></li>
+
+      <!-- CART INSIDE -->
+      <li class="nav-cart">
+        <a href="order.html" class="cart-link">
+          🛒
+          <span class="cart-count" id="cartCount">0</span>
+        </a>
+      </li>
+    </ul>
 </div>
+  </nav>
 
-<ul class="nav-links">
-<li><a href="menu.html">Menu</a></li>
-<li><a href="about.html">About Us</a></li>
-<li><a href="index.html#contact">Get in touch</a></li>
-</ul>
+  <!-- ORDER SECTION -->
+  <section class="cart-page container">
+    <div class="cart-layout">
 
-</div>
+      <div class="cart-left">
+        <div class="cart-header-row">
+          <h2>Shopping cart</h2>
+          <a href="menu.html" class="add-more-link">Add More &gt;</a>
+        </div>
 
-</nav>
+        <div id="cartList"></div>
+      </div>
 
-<!-- ORDER SECTION -->
+      <div class="cart-right">
+        <div class="checkout-panel">
 
-<section class="menu-hero container">
+          <label for="fullName">Full Name:</label>
+          <input id="fullName" type="text" placeholder="Enter your full name">
 
-<h1>Your Selection</h1>
+          <label for="address">Address:</label>
+          <input id="address" type="text" placeholder="Enter your address">
 
-<p id="productName">Loading...</p>
+          <label for="contactNumber">Contact Number:</label>
+          <input id="contactNumber" type="text" placeholder="Enter your number">
 
-<a href="contact.html" class="order-btn">Check Out</a>
+          <div class="summary-box">
+            <h3>Order Summary</h3>
 
-</section>
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="subtotal">₱0.00</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="total">₱0.00</span>
+            </div>
+          </div>
+
+          <div class="checkout-actions">
+            <a href="menu.html" class="secondary-btn">Add More</a>
+            <a href="checkout.html" class="order-btn" onclick="handleCheckout()">Proceed to Checkout</a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-grid">
+
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/logo.png" alt="Berry & Cream Logo">
+        </a>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+      </ul>
+
+    </div>
+  </footer>
+
+
 
 <script>
+  function toggleMenu() {
+    const navLinks = document.getElementById("navLinks");
+    if (navLinks) {
+      navLinks.classList.toggle("active");
+    }
+  }
 
-// get product from URL
-const params = new URLSearchParams(window.location.search);
-const product = params.get("product");
+  const products = {
+    "strawberry-shortcake": {
+      name: "Strawberry Shortcake",
+      price: 180,
+      image: "images/cake.png"
+    },
+    "croissants": {
+      name: "Croissants",
+      price: 95,
+      image: "images/croissant.png"
+    },
+    "chocolate-chip-cookie": {
+      name: "Chocolate Chip Cookie",
+      price: 85,
+      image: "images/cookie.png"
+    },
+    "strawberry-milk": {
+      name: "Strawberry Milk",
+      price: 120,
+      image: "images/milk.png"
+    },
+    "matcha": {
+      name: "Matcha Latte",
+      price: 135,
+      image: "images/matcha.png"
+    },
+    "strawberry-milk-fizz": {
+      name: "Strawberry Milk Fizz",
+      price: 130,
+      image: "images/fizz.png"
+    }
+  };
 
-// display it
-document.getElementById("productName").innerText =
-product ? product.replace(/-/g, " ") : "No item selected";
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+  function updateCartCount() {
+    const cartCount = document.getElementById("cartCount");
+    if (!cartCount) return;
+
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCount.textContent = totalItems;
+
+    if (totalItems > 0) {
+      cartCount.style.display = "flex";
+    } else {
+      cartCount.style.display = "none";
+    }
+  }
+
+  function renderCart() {
+    const cartList = document.getElementById("cartList");
+    const subtotalEl = document.getElementById("subtotal");
+    const totalEl = document.getElementById("total");
+
+    if (!cartList) return;
+
+    cartList.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartList.innerHTML = "<p>Your cart is empty.</p>";
+      if (subtotalEl) subtotalEl.textContent = "₱0.00";
+      if (totalEl) totalEl.textContent = "₱0.00";
+      updateCartCount();
+      return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+      const product = products[item.name];
+      if (!product) return;
+
+      const itemTotal = product.price * item.qty;
+      subtotal += itemTotal;
+
+      const card = document.createElement("div");
+      card.className = "cart-item";
+
+      card.innerHTML = `
+        <div class="cart-item-left">
+          <img src="${product.image}" alt="${product.name}">
+          <div>
+            <p class="cart-item-name">${product.name}</p>
+            <p class="cart-item-price">₱${product.price.toFixed(2)}</p>
+          </div>
+        </div>
+
+        <div class="qty-box">
+          <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+          <span>${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+        </div>
+      `;
+
+      cartList.appendChild(card);
+    });
+
+    if (subtotalEl) subtotalEl.textContent = `₱${subtotal.toFixed(2)}`;
+    if (totalEl) totalEl.textContent = `₱${subtotal.toFixed(2)}`;
+
+    updateCartCount();
+  }
+
+  function changeQty(index, change) {
+    if (index < 0 || index >= cart.length) return;
+
+    cart[index].qty += change;
+
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function saveCheckoutInfo() {
+    const name = document.getElementById("fullName")?.value || "";
+    const address = document.getElementById("address")?.value || "";
+    const contact = document.getElementById("contactNumber")?.value || "";
+
+    localStorage.setItem("checkoutName", name);
+    localStorage.setItem("checkoutAddress", address);
+    localStorage.setItem("checkoutContact", contact);
+  }
+
+function handleCheckout() {
+  saveCheckoutInfo();
+
+  // Save current cart for checkout display
+  localStorage.setItem("checkoutCart", JSON.stringify(cart));
+
+  // Clear cart immediately
+  localStorage.removeItem("cart");
+}
+
+
+  renderCart();
 </script>
+
+
+
 
 </body>
 </html>
